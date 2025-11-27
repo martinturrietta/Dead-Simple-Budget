@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dead Simple Budget</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="app-title">
+        <h3>Dead Simple Budget</h3>
+        </div>
+
+        <section id="toolbar">
+        <button id="export-btn">Export</button>
+        <button id="import-btn">Import</button>
+        <!-- Hidden file input used for Import -->
+        <input id="import-file" type="file" accept="application/json" style="display: none;">
+        </section>
+    </header>
+
+    
+    <main>
+        <section>
+            <h3>Bank & Summary</h3>
+            <div>
+                <input id="bank-input" type="number" step="0.01" placeholder="New Bank Balance">
+                <button id="bank-save-btn">Update bank balance</button>
+            </div>
+            <div class="summary-row">
+                <span>Bank Balance:------$<span id="sum-bank">0.00</span></span>
+            </div>
+            <div class="summary-row">
+                <span>Total envelopes:---$<span id="sum-envelopes">0.00</span></span>
+            </div>
+            <div class="summary-row">
+                <span>Difference:--------$<span id="sum-diff">0.00</span></span>
+            </div>
+            <div class="summary-row">
+                <span>Net after cards:---$<span id="sum-net-after-cards">0.00</span></span>
+            </div>
+        </section>
+
+        <section>
+            <input id="income-input" type="number" placeholder="Paycheck amount">
+            <button id="income-btn">Add Income</button>
+            <button id="auto-allocate-btn">Auto Allocate</button>
+        </section>
+
+        <section>
+            <h3>New Transaction</h3>
+            <div>
+                <label>
+                    From:
+                    <select id="tx-from">
+                        <option value="">(none)</option>
+                    </select>
+                </label>
+                <label>
+                    To:
+                    <select id="tx-to">
+                        <option value="">(none)</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>
+                    Amount:
+                    <input id="tx-amount" type="number" step="0.01" placeholder="0.00">
+                </label>
+            </div>
+            <div>
+                <label>
+                    Note:
+                    <input id="tx-note" type="text" placeholder="Optional">
+                </label>
+            </div>
+            <button id="tx-add-btn">Log Transaction</button>
+        </section>
+
+        <section>
+          <h3>Credit Cards 
+            <button id="add-card-btn">Add Credit Card</button>
+          </h3>
+          <div id="cards-list"></div>
+          
+        </section>
+       
+        <section>
+            <h3>Envelopes 
+              <button id="add-envelope-btn">Add Envelope</button>
+            </h3>            
+            <div id="envelopes-list"></div>
+        </section>
+
+        <section>
+            <h3>Recent Transactions</h3>
+            <div id="transactions-list"></div>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
