@@ -356,6 +356,15 @@ function getTotalCreditCardBalanceCents() {
     .reduce((sum, e) => sum + e.balanceCents, 0);
 }
 
+function getTotalAllocationsCents() {
+  return state.envelopes
+    .filter(env =>
+      !env.isCore &&           // exclude Income & Overflow
+      !env.isCredit &&         // exclude credit cards
+      env.targetCents > 0           // only things the user allocates into
+    )
+    .reduce((sum, env) => sum + env.targetCents, 0);
+}
 
 function cleanupUnusedEnvelopes() {
   // Build set of all envelope IDs that are still referenced in transactions
@@ -585,21 +594,23 @@ function renderSummary() {
   const totalEnvCents = getTotalEnvelopesBalanceCents();
   const cardCents = getTotalCreditCardBalanceCents();
   const bankCents = state.bankBalanceCents || 0;
-
   const netAfterCardsCents = totalEnvCents - cardCents;
   const diffCents = bankCents - totalEnvCents;
+  const allocCents = getTotalAllocationsCents();
 
   const elEnv = document.getElementById('sum-envelopes');
   const elCards = document.getElementById('sum-cards');
   const elBank = document.getElementById('sum-bank');
   const elNet = document.getElementById('sum-net-after-cards');
   const elDiff = document.getElementById('sum-diff');
-
+  const elAlloc = document.getElementById('sum-allocations');
+ 
   if (elEnv) elEnv.textContent = centsToDollars(totalEnvCents);
   if (elCards) elCards.textContent = centsToDollars(cardCents);
   if (elBank) elBank.textContent = centsToDollars(bankCents);
   if (elNet) elNet.textContent = centsToDollars(netAfterCardsCents);
   if (elDiff) elDiff.textContent = centsToDollars(diffCents);
+  if (elAlloc) elAlloc.textContent = centsToDollars(allocCents);
 }
 
 function renderEnvelopes() {
