@@ -231,6 +231,17 @@ function ensureCoreEnvelopes() {
   saveState();
 }
 
+function renderCoreEnvelopesPanel() {
+  const income = getIncomeEnvelope();
+  const overflow = getOverflowEnvelope();
+
+  const incomeEl = document.getElementById('income-balance');
+  const overflowEl = document.getElementById('overflow-balance');
+
+  if (incomeEl) incomeEl.textContent = income ? centsToDollars(income.balanceCents) : '0.00';
+  if (overflowEl) overflowEl.textContent = overflow ? centsToDollars(overflow.balanceCents) : '0.00';
+}
+
 function isCoreEnvelope(env) {
   return env.isIncome || env.isOverflow;
 }
@@ -620,7 +631,7 @@ function renderEnvelopes() {
   container.innerHTML = '';
 
   state.envelopes
-    .filter(e => e.isActive && !e.isCreditCard)
+    .filter(e => e.isActive && !e.isCreditCard && !isCoreEnvelope(e))
     .forEach(env => {
       const row = document.createElement('div');
       row.className = 'envelope';
@@ -684,6 +695,7 @@ function renderEnvelopes() {
   renderTransactionEnvelopeOptions();
   renderCreditCards();
   renderSummary();
+  renderCoreEnvelopesPanel();
 }
 
 function renderCreditCards() {
@@ -977,6 +989,7 @@ function init() {
   renderTransactions();
   renderCreditCards();
   renderSummary();
+  renderCoreEnvelopesPanel();
 }
 
 
